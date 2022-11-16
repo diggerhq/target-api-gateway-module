@@ -1,12 +1,12 @@
-resource "aws_lb" "{{ name }}_api_nlb" {
-  name               = "{{ name }}-api-nlb"
+resource "aws_lb" "{{ name | underscorify }}_api_nlb" {
+  name               = "{{ name | dashify }}-api-nlb"
   internal           = true
   load_balancer_type = "network"
   subnets            = var.subnets
 }
 
 resource "aws_lb_target_group" "{{ name | underscorify }}_nlb_tg" {
-  name        = "{{ name }}-api-nlb-tg"
+  name        = "{{ name | dashify }}-api-nlb-tg"
   port        = 80
   protocol    = "TCP"
   vpc_id      = var.vpc_id
@@ -16,10 +16,10 @@ resource "aws_lb_target_group" "{{ name | underscorify }}_nlb_tg" {
   }
 }
 
-resource "aws_lb_target_group_attachment" "{{ name }}_api_nlb_tg_attachment" {
-  target_group_arn = aws_lb_target_group.{{ name }}_api_nlb_tg.arn
+resource "aws_lb_target_group_attachment" "{{ name | underscorify }}_api_nlb_tg_attachment" {
+  target_group_arn = aws_lb_target_group.{{ name | underscorify }}_api_nlb_tg.arn
   # target to attach to this target group
-  target_id = module.{{ name }}-api.lb_arn
+  target_id = module.{{ name | dashify }}-api.lb_arn
   #  If the target type is alb, the targeted Application Load Balancer must have at least one listener whose port matches the target group port.
   port = 80
 }
