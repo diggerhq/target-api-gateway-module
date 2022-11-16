@@ -5,7 +5,7 @@ resource "aws_lb" "{{ name }}_api_nlb" {
   subnets            = var.subnets
 }
 
-resource "aws_lb_target_group" "{{ name }}_nlb_tg" {
+resource "aws_lb_target_group" "{{ name | underscorify }}_nlb_tg" {
   name        = "{{ name }}-api-nlb-tg"
   port        = 80
   protocol    = "TCP"
